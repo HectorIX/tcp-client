@@ -1,0 +1,10 @@
+[package]
+name = "tcp-client"
+version = "0.1.0"
+authors = ["HectorIX <giorgoschiotis@protonmail.com>"]
+
+[dependencies]
+futures = "*"
+tokio-core = "*"
+tokio-io = "*"
+bytes = "*"
