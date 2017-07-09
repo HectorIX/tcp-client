@@ -13,10 +13,15 @@ extern crate tokio_core;
 extern crate tokio_io;
 extern crate bytes;
 
+
+mod menu;
+mod parser;
+
 use std::env;
 use std::io::{self, Read, Write};
 use std::net::SocketAddr;
 use std::thread;
+use std::str;
 
 use bytes::{BufMut, BytesMut};
 use futures::sync::mpsc;
@@ -37,6 +42,8 @@ fn main() {
     let mut core = Core::new().unwrap();
     let handle = core.handle();
     let tcp = TcpStream::connect(&addr, &handle);
+
+    menu::welcome_menu();
 
     // Right now Tokio doesn't support a handle to stdin running on the event
     // loop, so we farm out that work to a separate thread. This thread will
@@ -127,6 +134,22 @@ fn read_stdin(mut tx: mpsc::Sender<Vec<u8>>) {
             Ok(n) => n,
         };
         buf.truncate(n);
-        tx = tx.send(buf).wait().unwrap();
+
+        let full_request = translate(buf);
+        println!("{:?}", full_request.clone() );
+        tx = tx.send(full_request.clone()).wait().unwrap();
     }
+}
+
+fn translate(buffer:Vec<u8>) -> Vec<u8> {
+
+
+    let readble_form = match str::from_utf8(&buffer) {
+        Ok(v) => v,
+        Err(e) => panic!("Invalid UTF-8 sequence: {}", e),
+    };
+
+    let client_request = parser::request_constructor(readble_form);
+
+    client_request.to_string().into_bytes()
 }
