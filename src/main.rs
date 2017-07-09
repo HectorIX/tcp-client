@@ -16,6 +16,7 @@ extern crate bytes;
 
 mod menu;
 mod parser;
+mod client_sign_up;
 
 use std::env;
 use std::io::{self, Read, Write};
@@ -136,7 +137,7 @@ fn read_stdin(mut tx: mpsc::Sender<Vec<u8>>) {
         buf.truncate(n);
 
         let full_request = translate(buf);
-        println!("{:?}", full_request.clone() );
+        //println!("{:?}", full_request.clone() );
         tx = tx.send(full_request.clone()).wait().unwrap();
     }
 }
@@ -149,7 +150,7 @@ fn translate(buffer:Vec<u8>) -> Vec<u8> {
         Err(e) => panic!("Invalid UTF-8 sequence: {}", e),
     };
 
-    let client_request = parser::request_constructor(readble_form);
+    let client_request = parser::request_constructor(readble_form.to_string());
 
     client_request.to_string().into_bytes()
 }
