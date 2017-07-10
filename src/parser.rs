@@ -1,6 +1,6 @@
 use menu;
 use client_sign_up;
-
+use client_sign_in;
 
 pub fn request_constructor(req:String) -> String {
 
@@ -26,8 +26,8 @@ pub fn request_constructor(req:String) -> String {
         "Sign-up" => {
             client_sign_up::sign_up()
         },
-        "sign_in" => {
-            "sign_in".to_string()
+        "Sign-in" => {
+            client_sign_in::sign_in()
         },
         "upload" => {
             "upload".to_string()

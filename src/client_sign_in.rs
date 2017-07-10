@@ -1,13 +1,13 @@
 use std::io::{self};
 
 
-pub fn sign_up() -> String {
+pub fn sign_in() -> String {
 
     let mut username = String::new();
     let mut password = String::new();
-    let mut full_request = "sign_up_state::Sign-up**".to_owned();
+    let mut full_request = "sign_up_state::Sign-in**".to_owned();
 
-    println!("===============================\n\tSIGN UP\n\n" );
+    println!("===============================\n\tSIGN IN\n\n" );
     println!("username: ");
     io::stdin().read_line(&mut username).unwrap();
 

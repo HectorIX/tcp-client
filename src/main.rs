@@ -17,6 +17,7 @@ extern crate bytes;
 mod menu;
 mod parser;
 mod client_sign_up;
+mod client_sign_in;
 
 use std::env;
 use std::io::{self, Read, Write};
