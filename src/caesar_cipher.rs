@@ -41,7 +41,7 @@ pub fn encrypt_caesar(message:String, encryption_key:u32) -> String {
 
 // Decrypt the message using the encryption key
 // and return the plaintext message as a string.
-pub fn decrypt_caesar( encrypted_message: String, encryption_key:i32 ) -> String {
+pub fn decrypt_caesar( encrypted_message: String, encryption_key:u32 ) -> String {
 
 
     let mut plaintext_message = String::new();

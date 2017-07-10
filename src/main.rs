@@ -18,6 +18,7 @@ mod menu;
 mod parser;
 mod file_io;
 mod interface;
+mod local_services;
 mod client_sign_up;
 mod client_sign_in;
 mod caesar_cipher;
