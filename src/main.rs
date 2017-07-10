@@ -16,8 +16,12 @@ extern crate bytes;
 
 mod menu;
 mod parser;
+mod file_io;
+mod interface;
 mod client_sign_up;
 mod client_sign_in;
+mod caesar_cipher;
+mod aes_256;
 
 use std::env;
 use std::io::{self, Read, Write};

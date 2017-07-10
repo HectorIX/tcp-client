@@ -1,0 +1,10 @@
+Hello world,  
+
+Common truth: The sky is blue and the sea is vast!
+
+Personal info:
++ My favorite color is Red.
++ My favorite number is 13.
+
+
+Cheers George :)
