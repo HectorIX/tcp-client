@@ -67,7 +67,7 @@ pub fn aes_encrypt() {
     let mut iv: [u8; 16] = [0; 16];
 
     // Local variables.
-    let mut encr_message: String = "".to_string();
+    //let mut encr_message: String = "".to_string();
     let mut rng = OsRng::new().ok().unwrap();
 
     // Create a random key and a random IV.
@@ -103,5 +103,50 @@ pub fn aes_encrypt() {
     // Store the message to the "aesOutput.txt"
     file_io::write_file(path_encr, encrypted_string);
     println!("Your message is secure!");
+
+}
+
+
+pub fn aes_decrypt() {
+
+    // Key and IV for the AES-256 (de)encryption algorithm.
+    let mut key: [u8; 32] = [0; 32];
+    let mut iv: [u8; 16] = [0; 16];
+
+    // Local variables.
+    //let mut encr_message: String = "".to_string();
+    let mut rng = OsRng::new().ok().unwrap();
+
+    // Create a random key and a random IV.
+    rng.fill_bytes(&mut key);
+    rng.fill_bytes(&mut iv);
+
+    let mut path_encr = "local_data/encrypted/".to_string();
+    let mut path_decr = "local_data/decrypted/".to_string();
+
+    let filename = interface::read_filename();
+    let filename_splitted:Vec<&str> = filename.split("\n").collect();
+
+    path_encr.push_str(&filename_splitted[0].to_string());
+    path_decr.push_str(&filename_splitted[0].to_string());
+
+    let encrypted_message = file_io::read_file(path_encr.to_string());
+
+
+    // Encrypt the message using AES-256 encryption algorithm.
+    let decrypted_message = aes_256::aes256_decrypt( &encrypted_message.into_bytes(),
+                                                     &key,
+                                                     &iv).ok().unwrap();
+
+    let mut decrypted_string = "".to_string();
+
+    // Convert the message from byte stream to String.
+    for byte in decrypted_message {
+        decrypted_string.push(std::char::from_u32(byte as u32).unwrap());
+    }
+
+
+    file_io::write_file(path_decr, decrypted_string);
+    println!("Your message decrypted!");
 
 }

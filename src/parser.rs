@@ -51,7 +51,9 @@ pub fn request_constructor(req:String) -> String {
             "".to_string()
         },
         "AES-Decrypt" => {
-            "decrypt".to_string()
+
+            local_services::aes_decrypt();
+            "".to_string()
         },
         "Caesar-Decrypt" => {
 
