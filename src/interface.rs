@@ -1,3 +1,6 @@
+extern crate rpassword;
+
+
 use std::io::{self, BufRead};
 
 
@@ -31,12 +34,7 @@ pub fn read_integer() -> u32 {
 // and return this message.
 pub fn read_filename() -> String {
 
-    let mut filename = String::new();
-    let stdin = io::stdin();
-
-    println!("Enter the filename:" );
-    stdin.lock().read_line(&mut filename)
-                .expect("Could not read your message");
+    let filename = rpassword::prompt_response_stdout("Enter filename: ").unwrap();
 
     filename
 
