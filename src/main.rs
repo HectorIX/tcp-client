@@ -24,6 +24,7 @@ mod client_sign_in;
 mod caesar_cipher;
 mod aes_256;
 mod generate_password;
+mod integrity;
 
 use std::env;
 use std::io::{self, Read, Write};
@@ -133,21 +134,30 @@ impl Encoder for Bytes {
 // Our helper method which will read data from stdin and send it along the
 // sender provided.
 fn read_stdin(mut tx: mpsc::Sender<Vec<u8>>) {
+
+
     let mut stdin = io::stdin();
+
+
     loop {
+
         let mut buf = vec![0; 1024];
+
         let n = match stdin.read(&mut buf) {
             Err(_) |
             Ok(0) => break,
             Ok(n) => n,
         };
+
         buf.truncate(n);
 
         let full_request = translate(buf);
-        //println!("{:?}", full_request.clone() );
+
         tx = tx.send(full_request.clone()).wait().unwrap();
     }
 }
+
+
 
 fn translate(buffer:Vec<u8>) -> Vec<u8> {
 
