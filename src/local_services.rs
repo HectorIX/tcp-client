@@ -18,10 +18,9 @@ pub fn caesar_encrypt() {
     let mut path_encr = "local_data/encrypted/".to_string();
 
     let filename = interface::read_filename();
-    let filename_splitted:Vec<&str> = filename.split("\n").collect();
 
-    path_raw.push_str(&filename_splitted[0].to_string());
-    path_encr.push_str(&filename_splitted[0].to_string());
+    path_raw.push_str(&filename);
+    path_encr.push_str(&filename);
 
     let plaintext = file_io::read_file(path_raw.to_string());
 
@@ -30,7 +29,7 @@ pub fn caesar_encrypt() {
 
     file_io::write_file(path_encr,encrypted_message);
 
-    println!("File {} successfully encrypted!", filename_splitted[0].to_string());
+    println!("File successfully encrypted!");
 
 }
 
@@ -42,10 +41,9 @@ pub fn caesar_decrypt() {
     let mut path_decr = "local_data/decrypted/".to_string();
 
     let filename = interface::read_filename();
-    let filename_splitted:Vec<&str> = filename.split("\n").collect();
 
-    path_encr.push_str(&filename_splitted[0].to_string());
-    path_decr.push_str(&filename_splitted[0].to_string());
+    path_encr.push_str(&filename);
+    path_decr.push_str(&filename);
 
     let encrypted_message = file_io::read_file(path_encr.to_string());
 
@@ -54,7 +52,7 @@ pub fn caesar_decrypt() {
 
     file_io::write_file(path_decr,decrypted_message);
 
-    println!("File {} successfully decrypted!", filename_splitted[0].to_string());
+    println!("File successfully decrypted!");
 
 
 }
@@ -71,10 +69,10 @@ pub fn aes_encrypt() {
     let mut path_encr = "local_data/encrypted/".to_string();
 
     let filename = interface::read_filename();
-    let filename_splitted:Vec<&str> = filename.split("\n").collect();
 
-    path_raw.push_str(&filename_splitted[0].to_string());
-    path_encr.push_str(&filename_splitted[0].to_string());
+
+    path_raw.push_str(&filename);
+    path_encr.push_str(&filename);
 
 
     // Generate random password and initialize vector.
@@ -131,10 +129,9 @@ pub fn aes_decrypt() {
     let mut path_decr = "local_data/decrypted/".to_string();
 
     let filename = interface::read_filename();
-    let filename_splitted:Vec<&str> = filename.split("\n").collect();
 
-    path_encr.push_str(&filename_splitted[0].to_string());
-    path_decr.push_str(&filename_splitted[0].to_string());
+    path_encr.push_str(&filename);
+    path_decr.push_str(&filename);
 
     let encrypted_message = file_io::read_file(path_encr.to_string());
 
