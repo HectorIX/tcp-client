@@ -44,6 +44,7 @@ pub fn aes256_encrypt(data: &[u8], key: &[u8], iv: &[u8]) -> Result<Vec<u8>, sym
 // Decrypts a buffer with the given key and iv using AES-256/CBC/Pkcs encryption.
 pub fn aes256_decrypt(encrypted_data: &[u8], key: &[u8], iv: &[u8]) -> Result<Vec<u8>, symmetriccipher::SymmetricCipherError> {
 
+
     let mut decryptor = aes::cbc_decryptor(
             aes::KeySize::KeySize256,
             key,
@@ -56,7 +57,7 @@ pub fn aes256_decrypt(encrypted_data: &[u8], key: &[u8], iv: &[u8]) -> Result<Ve
     let mut write_buffer = buffer::RefWriteBuffer::new(&mut buffer);
 
     loop {
-
+        println!("Loop iterator");
         let result = try!(decryptor.decrypt(&mut read_buffer, &mut write_buffer, true));
         final_result.extend(write_buffer.take_read_buffer().take_remaining().iter().map(|&i| i));
 
@@ -66,5 +67,6 @@ pub fn aes256_decrypt(encrypted_data: &[u8], key: &[u8], iv: &[u8]) -> Result<Ve
         }
     }
 
+    
     Ok(final_result)
 }

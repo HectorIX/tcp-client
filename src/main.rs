@@ -23,6 +23,7 @@ mod client_sign_up;
 mod client_sign_in;
 mod caesar_cipher;
 mod aes_256;
+mod generate_password;
 
 use std::env;
 use std::io::{self, Read, Write};
