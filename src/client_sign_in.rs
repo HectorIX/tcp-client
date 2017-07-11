@@ -7,7 +7,7 @@ use std::io::{self};
 pub fn sign_in() -> String {
 
 
-    let mut full_request = "sign_up_state::Sign-in**".to_owned();
+    let mut full_request = "sign_in_state::Sign-in**".to_owned();
 
     println!("===============================\n\tSIGN IN\n\n" );
     let username = rpassword::prompt_response_stdout("username: ").unwrap();

@@ -25,7 +25,7 @@ pub fn caesar_encrypt() {
     let plaintext = file_io::read_file(path_raw.to_string());
 
     let encryption_key = interface::read_integer();
-    let encrypted_message = caesar_cipher::encrypt_caesar(plaintext,encryption_key);
+    let encrypted_message = caesar_cipher::encrypt_caesar(plaintext, encryption_key);
 
     file_io::write_file(path_encr,encrypted_message);
 

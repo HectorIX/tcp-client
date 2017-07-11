@@ -2,7 +2,7 @@ use menu;
 use local_services;
 use client_sign_up;
 use client_sign_in;
-
+use client_upload;
 
 
 pub fn request_constructor(req:String) -> String {
@@ -32,7 +32,7 @@ pub fn request_constructor(req:String) -> String {
             client_sign_in::sign_in()
         },
         "Upload" => {
-            "upload".to_string()
+            client_upload::upload()
         },
         "Download" => {
             "download".to_string()
