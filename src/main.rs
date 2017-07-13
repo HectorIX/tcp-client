@@ -21,7 +21,7 @@ mod interface;
 mod local_services;
 mod client_sign_up;
 mod client_sign_in;
-mod client_upload; 
+mod client_upload;
 mod caesar_cipher;
 mod aes_256;
 mod generate_password;
@@ -82,6 +82,8 @@ fn main() {
     let mut stdout = io::stdout();
     let client = tcp.and_then(|stream| {
         let (sink, stream) = stream.framed(Bytes).split();
+        //stream.and_then( move |buffer| foo(buffer));
+        //let (_x,y) = stream.framed(Bytes).split();
         let send_stdin = stdin_rx.forward(sink);
         let write_stdout = stream.for_each(move |buf| {
             stdout.write_all(&buf)
@@ -96,6 +98,7 @@ fn main() {
     core.run(client).unwrap();
 }
 
+
 /// A simple `Codec` implementation that just ships bytes around.
 ///
 /// This type is used for "framing" a TCP stream of bytes but it's really just a
@@ -105,17 +108,34 @@ fn main() {
 struct Bytes;
 
 impl Decoder for Bytes {
+
     type Item = BytesMut;
     type Error = io::Error;
 
     fn decode(&mut self, buf: &mut BytesMut) -> io::Result<Option<BytesMut>> {
+
         if buf.len() > 0 {
-            let len = buf.len();
-            Ok(Some(buf.split_to(len)))
+
+            let end = buf.len();
+            let input = buf.split_to(end);
+
+            let response = str::from_utf8(&input).unwrap();
+
+            let output = if response.contains("session_key") {
+                BytesMut::from("success\n")
+            } else {
+                BytesMut::from("not_success\n")
+            };
+
+            Ok(Some(output))
+
         } else {
+
             Ok(None)
         }
+
     }
+
 
     fn decode_eof(&mut self, buf: &mut BytesMut) -> io::Result<Option<BytesMut>> {
         self.decode(buf)
