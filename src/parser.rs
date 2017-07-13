@@ -70,3 +70,9 @@ pub fn request_constructor(req:String) -> String {
     }
 
 }
+
+
+pub fn response_deconstructor(response:String) -> String {
+
+    "response".to_string()
+}
