@@ -71,11 +71,68 @@ pub fn request_constructor(req:String) -> String {
 }
 
 
-pub fn response_decomposer(response:String) -> BytesMut {
+pub fn response_decomposer(server_response:String) -> BytesMut {
 
-    if response.contains("session_key") {
-        BytesMut::from("success\n")
-    } else {
-        BytesMut::from("not_success\n")
+    let (the_state, response) = response_splitter(server_response);
+    let (status, data) = status_splitter(response);
+
+
+    match the_state.as_ref() {
+
+        "sign_in_state" => {
+
+            if status == "OK".to_string() {
+
+                let (session_key, username) = extract_session_key(data);
+                BytesMut::from("\n\t==========    Welcome!    ==========\n\t=\n\t=\n")
+
+            }
+            else {
+                BytesMut::from("\n\n\t*** Either your username or password are incorrect.\n\t    Please try again...\n")
+            }
+
+        },
+        "sign_up_state" => {
+            BytesMut::from("si")
+        },
+        "upload_state" => {
+            BytesMut::from("up")
+        },
+        "download_state" => {
+            BytesMut::from("do")
+        },
+        _ => {
+            BytesMut::from("No such state!" )  // unreachable
+        },
     }
+
+
+}
+
+
+fn response_splitter( server_response:String ) -> (String, String) {
+
+    let response_vector: Vec<&str> = server_response.split("::").collect();
+    let (the_state, request) = (response_vector[0].to_string(), response_vector[1].to_string());
+
+    (the_state, request)
+}
+
+
+fn status_splitter( response_service:String ) -> (String, String) {
+
+    let response_vector: Vec<&str> = response_service.split("**").collect();
+    let (status, data) = (response_vector[0].to_string(), response_vector[1].to_string());
+
+    (status, data)
+}
+
+
+
+fn extract_session_key(data:String) -> (String, String)  {
+
+    let data_vector: Vec<&str> = data.split("--").collect();
+    let (session_key, rest_data) = (data_vector[0].to_owned(), data_vector[1].to_owned());
+
+    (session_key, rest_data)
 }
