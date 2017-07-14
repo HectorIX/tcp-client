@@ -104,7 +104,19 @@ pub fn response_decomposer(server_response:String) -> BytesMut {
 
         },
         "sign_up_state" => {
-            BytesMut::from("si")
+
+            if status == "OK".to_string() {
+
+                BytesMut::from("Congradulations! You signed up successfully!\n")
+            }
+            else if status == "Dublicate".to_string() {
+
+                BytesMut::from("\n\t ** Username already exists!\n")
+            }
+            else {
+
+                BytesMut::from("Sign-up failed!")
+            }
         },
         "upload_state" => {
             BytesMut::from("up")
