@@ -4,7 +4,9 @@ use client_sign_up;
 use client_sign_in;
 use client_upload;
 
+use std::default::Default;
 use bytes::{BytesMut};
+
 
 
 pub fn request_constructor(req:String) -> String {
@@ -84,7 +86,16 @@ pub fn response_decomposer(server_response:String) -> BytesMut {
             if status == "OK".to_string() {
 
                 let (session_key, username) = extract_session_key(data);
-                BytesMut::from("\n\t==========    Welcome!    ==========\n\t=\n\t=\n")
+                let mut user = client_sign_in::User::default();
+
+                user.username = username;
+                user.session_key = session_key;
+                user.active = true;
+
+                //println!("Username = {}", user.get_username() );
+                //println!("session_key = {}", user.get_session_key() );
+
+                BytesMut::from("\n\t==========    Welcome!    ==========\n\n\n")
 
             }
             else {

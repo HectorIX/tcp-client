@@ -8,25 +8,25 @@ use std::default::Default;
 #[derive(Default)]
 pub struct User {
 
-    username : String,
-    session_key : String,
-    active : bool,
+    pub username : String,
+    pub session_key : String,
+    pub active : bool,
 }
 
 
 impl User {
 
-    fn get_username(&self) -> &String {
+    pub fn get_username(&self) -> &String {
 
         &self.username
     }
 
-    fn get_session_key(&self) -> &String {
+    pub fn get_session_key(&self) -> &String {
 
         &self.session_key
     }
 
-    fn state(&mut self) -> &mut bool {
+    pub fn state(&mut self) -> &mut bool {
 
         &mut self.active
     }
