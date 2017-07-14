@@ -120,17 +120,12 @@ impl Decoder for Bytes {
             let input = buf.split_to(end);
 
             let response = str::from_utf8(&input).unwrap();
-
-            let output = if response.contains("session_key") {
-                BytesMut::from("success\n")
-            } else {
-                BytesMut::from("not_success\n")
-            };
+            let output =  parser::response_decomposer(response.to_string());
 
             Ok(Some(output))
 
         } else {
-            
+
             Ok(None)
         }
 

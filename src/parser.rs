@@ -4,6 +4,8 @@ use client_sign_up;
 use client_sign_in;
 use client_upload;
 
+use bytes::{BytesMut};
+
 
 pub fn request_constructor(req:String) -> String {
 
@@ -14,16 +16,13 @@ pub fn request_constructor(req:String) -> String {
     match no_new_line.as_ref() {
 
         "help" => {
-            "informatic_state::help**".to_string()
-        },
-        "start" => {
-            "informatic_state::start**".to_string()
+            menu::help_menu()
         },
         "local" => {
             menu::client_menu()
         },
         "net" => {
-            "informatic_state::menu**".to_string()
+            menu::server_menu()
         },
         "Sign-up" => {
             client_sign_up::sign_up()
@@ -72,7 +71,11 @@ pub fn request_constructor(req:String) -> String {
 }
 
 
-pub fn response_deconstructor(response:String) -> String {
+pub fn response_decomposer(response:String) -> BytesMut {
 
-    "response".to_string()
+    if response.contains("session_key") {
+        BytesMut::from("success\n")
+    } else {
+        BytesMut::from("not_success\n")
+    }
 }
