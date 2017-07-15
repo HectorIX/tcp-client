@@ -29,10 +29,28 @@ pub fn request_constructor(req:String) -> String {
             menu::server_menu()
         },
         "Sign-up" => {
-            client_sign_up::sign_up()
+
+            if !user::get_user_status() {
+
+                client_sign_up::sign_up()
+            }
+            else {
+
+                "sign_up_state::Sign-up**".to_string()
+            }
+
         },
         "Sign-in" => {
-            client_sign_in::sign_in()
+
+            if !user::get_user_status() {
+
+                client_sign_in::sign_in()
+            }
+            else {
+
+                "sign_in_state::Sign-in**".to_string()
+            }
+
         },
         "Upload" => {
 
@@ -41,6 +59,7 @@ pub fn request_constructor(req:String) -> String {
                 client_upload::upload()
             }
             else {
+
                 "upload_state::Upload**".to_string()
             }
         },
@@ -112,8 +131,17 @@ pub fn response_decomposer(server_response:String) -> BytesMut {
                 BytesMut::from(welcome_message)
 
             }
-            else {
+            else if status == "NOT_Mactching".to_string() {
+
                 BytesMut::from("\n\n\t*** Either your username or password are incorrect.\n\t    Please try again...\n")
+            }
+            else if status == "ALREADY_Sign_in".to_string() {
+
+                BytesMut::from("\n\t You are already Loged-In!\n")
+            }
+            else {
+
+                BytesMut::from("No such state!\n")
             }
 
         },
@@ -127,9 +155,13 @@ pub fn response_decomposer(server_response:String) -> BytesMut {
 
                 BytesMut::from("\n\t ** Username already exists!\n")
             }
+            else if status == "Unauthorised".to_string() {
+
+                BytesMut::from("\n\t ** You are not authorised to Sign-up while Loged-In!\n")
+            }
             else {
 
-                BytesMut::from("Sign-up failed!")
+                BytesMut::from("No such state\n" )
             }
         },
         "upload_state" => {
@@ -138,9 +170,13 @@ pub fn response_decomposer(server_response:String) -> BytesMut {
 
                 BytesMut::from("Upload completed!\n")
             }
-            else {
+            else if status == "Failed".to_string() {
 
                 BytesMut::from("Service declined! You are not authorized user... Please login!\n")
+            }
+            else {
+
+                BytesMut::from("No such state!\n")
             }
 
         },
