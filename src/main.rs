@@ -14,7 +14,9 @@ extern crate tokio_io;
 extern crate bytes;
 
 
+
 mod menu;
+mod user;
 mod parser;
 mod file_io;
 mod interface;
@@ -41,6 +43,11 @@ use tokio_core::reactor::Core;
 use tokio_io::AsyncRead;
 use tokio_io::codec::{Encoder, Decoder};
 
+
+
+
+
+
 fn main() {
     // Parse what address we're going to connect to
     let addr = env::args().nth(1).unwrap_or_else(|| {
@@ -53,7 +60,16 @@ fn main() {
     let handle = core.handle();
     let tcp = TcpStream::connect(&addr, &handle);
 
+
     menu::welcome_menu();
+
+    user::set_username("George".to_string());
+    println!("user = {:?}", user::get_user_status());
+
+
+    //user.username = "George".to_string();
+    //*user.username = *"George";
+    //println!("username = {:?}", do_a_call_2() );
 
     // Right now Tokio doesn't support a handle to stdin running on the event
     // loop, so we farm out that work to a separate thread. This thread will

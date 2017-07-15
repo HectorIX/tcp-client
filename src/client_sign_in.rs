@@ -2,36 +2,7 @@ extern crate rpassword;
 
 
 use std::io::{self};
-use std::default::Default;
 
-
-#[derive(Default)]
-pub struct User {
-
-    pub username : String,
-    pub session_key : String,
-    pub active : bool,
-}
-
-
-impl User {
-
-    pub fn get_username(&self) -> &String {
-
-        &self.username
-    }
-
-    pub fn get_session_key(&self) -> &String {
-
-        &self.session_key
-    }
-
-    pub fn state(&mut self) -> &mut bool {
-
-        &mut self.active
-    }
-
-}
 
 
 

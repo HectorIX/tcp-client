@@ -4,8 +4,8 @@ use client_sign_up;
 use client_sign_in;
 use client_upload;
 
-use std::default::Default;
 use bytes::{BytesMut};
+
 
 
 
@@ -13,6 +13,7 @@ pub fn request_constructor(req:String) -> String {
 
     let req_vector: Vec<&str> = req.split("\n").collect();
     let no_new_line = req_vector[0].to_string();
+
 
 
     match no_new_line.as_ref() {
@@ -33,7 +34,12 @@ pub fn request_constructor(req:String) -> String {
             client_sign_in::sign_in()
         },
         "Upload" => {
-            client_upload::upload()
+            //if user.active {
+                client_upload::upload()
+            //}
+            //else {
+            //    "Declined! You are not authorized!\n".to_string()
+            //}
         },
         "Download" => {
             "download".to_string()
@@ -75,6 +81,7 @@ pub fn request_constructor(req:String) -> String {
 
 pub fn response_decomposer(server_response:String) -> BytesMut {
 
+
     let (the_state, response) = response_splitter(server_response);
     let (status, data) = status_splitter(response);
 
@@ -86,11 +93,10 @@ pub fn response_decomposer(server_response:String) -> BytesMut {
             if status == "OK".to_string() {
 
                 let (session_key, username) = extract_session_key(data);
-                let mut user = client_sign_in::User::default();
 
-                user.username = username;
-                user.session_key = session_key;
-                user.active = true;
+                //user.username = username;
+                //user.session_key = session_key;
+                //user.active = true;
 
                 //println!("Username = {}", user.get_username() );
                 //println!("session_key = {}", user.get_session_key() );
@@ -119,7 +125,15 @@ pub fn response_decomposer(server_response:String) -> BytesMut {
             }
         },
         "upload_state" => {
-            BytesMut::from("up")
+
+            if status == "OK".to_string() {
+
+                BytesMut::from("Upload completed!\n")
+            }
+            else {
+                BytesMut::from("Upload failed!\n")
+            }
+
         },
         "download_state" => {
             BytesMut::from("do")
