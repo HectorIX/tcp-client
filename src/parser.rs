@@ -4,6 +4,7 @@ use local_services;
 use client_sign_up;
 use client_sign_in;
 use client_upload;
+use client_download;
 
 use bytes::{BytesMut};
 
@@ -64,7 +65,15 @@ pub fn request_constructor(req:String) -> String {
             }
         },
         "Download" => {
-            "download".to_string()
+
+            if user::get_user_status() {
+
+                client_download::download()
+            }
+            else {
+
+                "download_state::Download**".to_string()
+            }
         },
         "Integrity" => {
             "integrity".to_string()
@@ -181,7 +190,29 @@ pub fn response_decomposer(server_response:String) -> BytesMut {
 
         },
         "download_state" => {
-            BytesMut::from("do")
+
+            if status == "OK".to_string() {
+
+                let success = client_download::store_file_locally(data);
+
+                if success {
+
+                    BytesMut::from("Download completed!\n")
+                }
+                else {
+
+                    BytesMut::from("No such file in your privated data directory!\n")
+                }
+
+            }
+            else if status == "Failed".to_string() {
+
+                BytesMut::from("You are not Loged-In!\n")
+            }
+            else {
+
+                BytesMut::from("No such state!")
+            }
         },
         _ => {
             BytesMut::from("No such state!" )  // unreachable
@@ -217,4 +248,13 @@ fn extract_session_key(data:String) -> (String, String)  {
     let (session_key, rest_data) = (data_vector[0].to_owned(), data_vector[1].to_owned());
 
     (session_key, rest_data)
+}
+
+
+pub fn extract_file_context(data:String) -> (String, String)  {
+
+    let data_vector: Vec<&str> = data.split("<$$>").collect();
+    let (filename, file_context) = (data_vector[0].to_owned(), data_vector[1].to_owned());
+
+    (filename, file_context)
 }

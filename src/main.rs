@@ -24,6 +24,7 @@ mod local_services;
 mod client_sign_up;
 mod client_sign_in;
 mod client_upload;
+mod client_download; 
 mod caesar_cipher;
 mod aes_256;
 mod generate_password;
