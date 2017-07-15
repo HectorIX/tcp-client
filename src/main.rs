@@ -63,13 +63,6 @@ fn main() {
 
     menu::welcome_menu();
 
-    user::set_username("George".to_string());
-    println!("user = {:?}", user::get_user_status());
-
-
-    //user.username = "George".to_string();
-    //*user.username = *"George";
-    //println!("username = {:?}", do_a_call_2() );
 
     // Right now Tokio doesn't support a handle to stdin running on the event
     // loop, so we farm out that work to a separate thread. This thread will

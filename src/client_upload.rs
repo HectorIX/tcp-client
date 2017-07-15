@@ -1,3 +1,4 @@
+use user;
 use file_io;
 use interface;
 
@@ -13,7 +14,10 @@ pub fn upload() -> String {
 
     let file_context = file_io::read_file(path_to_file.to_string());
 
-    full_request.push_str("admin--");
+    let username = user::get_username();
+
+    full_request.push_str(&username);
+    full_request.push_str("--");
     full_request.push_str(&filename);
     full_request.push_str("<$$>");
     full_request.push_str(&file_context);

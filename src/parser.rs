@@ -1,4 +1,5 @@
 use menu;
+use user;
 use local_services;
 use client_sign_up;
 use client_sign_in;
@@ -34,12 +35,14 @@ pub fn request_constructor(req:String) -> String {
             client_sign_in::sign_in()
         },
         "Upload" => {
-            //if user.active {
+
+            if user::get_user_status() {
+
                 client_upload::upload()
-            //}
-            //else {
-            //    "Declined! You are not authorized!\n".to_string()
-            //}
+            }
+            else {
+                "upload_state::Upload**".to_string()
+            }
         },
         "Download" => {
             "download".to_string()
@@ -94,14 +97,19 @@ pub fn response_decomposer(server_response:String) -> BytesMut {
 
                 let (session_key, username) = extract_session_key(data);
 
-                //user.username = username;
-                //user.session_key = session_key;
-                //user.active = true;
+                let mut name = username;
+                let mut key  = session_key;
 
-                //println!("Username = {}", user.get_username() );
-                //println!("session_key = {}", user.get_session_key() );
+                name.pop(); // no '\n'
+                key.pop();
 
-                BytesMut::from("\n\t==========    Welcome!    ==========\n\n\n")
+                user::set_username(name);
+                user::set_session_key(key);
+                user::set_user_status(true);
+
+                let welcome_message = format!("\n\t==========    Welcome {}!    ==========\n\n\n", user::get_username());
+
+                BytesMut::from(welcome_message)
 
             }
             else {
@@ -131,7 +139,8 @@ pub fn response_decomposer(server_response:String) -> BytesMut {
                 BytesMut::from("Upload completed!\n")
             }
             else {
-                BytesMut::from("Upload failed!\n")
+
+                BytesMut::from("Service declined! You are not authorized user... Please login!\n")
             }
 
         },
