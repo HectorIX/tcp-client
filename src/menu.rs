@@ -42,8 +42,8 @@ pub fn client_menu() -> String {
 pub fn server_menu() -> String {
 
 
-    let horizontal_line = "\n========================    SERVER MENU    ====================\n\n";
-    let exit      = "\t <:> To exit type: Exit\n";
+    let horizontal_line = "\n=========================    SERVER MENU    =======================\n\n";
+    let exit      = "\t <:> To exit type: exit\n";
     let sign_in   = "\t <:> To sign-in type: Sign-in\n";
     let sign_up   = "\t <:> To sign-up type: Sign-up\n";
     let upload    = "\t <:> To upload an encryped file type: Upload\n";

@@ -76,33 +76,33 @@ pub fn request_constructor(req:String) -> String {
             }
         },
         "Integrity" => {
-            "integrity".to_string()
+
+            "".to_string()
         },
         "AES-Encrypt" => {
 
-            local_services::aes_encrypt();
-            "".to_string()
+            local_services::aes_encrypt()
         },
         "Caesar-Encrypt" => {
 
-            local_services::caesar_encrypt();
-            "".to_string()
+            local_services::caesar_encrypt()
         },
         "AES-Decrypt" => {
 
-            local_services::aes_decrypt();
-            "".to_string()
+            local_services::aes_decrypt()
         },
         "Caesar-Decrypt" => {
 
-            local_services::caesar_decrypt();
-            "".to_string()
+            local_services::caesar_decrypt()
         },
         "exit" => {
+
             "informatic_state::exit**".to_string()
         },
         _ => {
-            "\n\t+ Typpo(!!!), please try again...\n".to_string()
+
+            println!("\n\t+ Typpo(!!!), please try again...\n");
+            "".to_string()
         },
 
     }

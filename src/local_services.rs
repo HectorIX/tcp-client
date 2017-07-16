@@ -12,7 +12,7 @@ use generate_password;
 
 
 
-pub fn caesar_encrypt() {
+pub fn caesar_encrypt() -> String {
 
     let mut path_raw = "local_data/raw/".to_string();
     let mut path_encr = "local_data/encrypted/".to_string();
@@ -27,15 +27,17 @@ pub fn caesar_encrypt() {
     let encryption_key = interface::read_integer();
     let encrypted_message = caesar_cipher::encrypt_caesar(plaintext, encryption_key);
 
-    file_io::write_file(path_encr,encrypted_message);
+    file_io::write_file(path_encr, encrypted_message);
 
     println!("File successfully encrypted!");
+
+    "".to_string()
 
 }
 
 
 
-pub fn caesar_decrypt() {
+pub fn caesar_decrypt() -> String {
 
     let mut path_encr = "local_data/encrypted/".to_string();
     let mut path_decr = "local_data/decrypted/".to_string();
@@ -54,11 +56,11 @@ pub fn caesar_decrypt() {
 
     println!("File successfully decrypted!");
 
-
+    "".to_string()
 }
 
 
-pub fn aes_encrypt() {
+pub fn aes_encrypt() -> String {
 
 
     let path_symmetric_key = "local_data/key_manager/symmetric_key.txt".to_string();
@@ -112,10 +114,11 @@ pub fn aes_encrypt() {
 
     println!("Your message is secure!");
 
+    "".to_string()
 }
 
 
-pub fn aes_decrypt() {
+pub fn aes_decrypt() -> String {
 
     let symmetric_key = rpassword::prompt_password_stdout("Symmetric key: ").unwrap();
     let initialize_vector = rpassword::prompt_password_stdout("Initialize Vector: ").unwrap();
@@ -160,4 +163,5 @@ pub fn aes_decrypt() {
 
     println!("Your message decrypted!");
 
+    "".to_string()
 }
