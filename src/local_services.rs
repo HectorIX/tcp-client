@@ -192,7 +192,7 @@ pub fn integrity() -> String {
     data.push_str(&whirlpool);
     data.push_str("\n");
 
-    file_io::write_file(path_integrity, data);
+    file_io::append(path_integrity, data);
 
     println!("Hash values computed!\n");
 

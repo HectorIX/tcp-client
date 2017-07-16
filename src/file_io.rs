@@ -72,3 +72,36 @@ pub fn read_file( filename:String ) -> String {
     context
 
 }
+
+
+
+
+pub fn append( filename:String, context:String ) {
+
+
+    // Create the File if not already exists.
+    let mut file = match OpenOptions::new()
+                                    .read(true)
+                                    .write(true)
+                                    .create(true)
+                                    .append(true)
+                                    .open(&filename) {
+
+        Err(failure) => panic!("System failed to create File {} because of: {}",
+                        filename,
+                        failure.description()
+                    ),
+        Ok(file) => file,
+    };
+
+    // Write the context into the file.
+    match file.write_all(context.as_bytes()) {
+
+        Err(failure) => {
+                panic!("Couldn't write to {}: {}", filename
+                                                 , failure.description())
+                },
+        Ok(_) => println!("Message successfully stored into {}.", filename),
+    }
+
+}
