@@ -77,7 +77,7 @@ pub fn request_constructor(req:String) -> String {
         },
         "Integrity" => {
 
-            "".to_string()
+            local_services::integrity()
         },
         "AES-Encrypt" => {
 

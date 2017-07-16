@@ -8,6 +8,7 @@ use file_io;
 use caesar_cipher;
 use aes_256;
 use generate_password;
+use integrity;
 
 
 
@@ -141,9 +142,9 @@ pub fn aes_decrypt() -> String {
     let mut encr_message_as_bytes: Vec<u8> = Vec::new();
 
     // Convert this message to a byte stream.
-                   for character in encrypted_message.chars() {
-                       encr_message_as_bytes.push(character as u8);
-                   }
+    for character in encrypted_message.chars() {
+        encr_message_as_bytes.push(character as u8);
+    }
 
     // Encrypt the message using AES-256 encryption algorithm.
     let decr_message_as_bytes = aes_256::aes256_decrypt( &encr_message_as_bytes[..],
@@ -162,6 +163,38 @@ pub fn aes_decrypt() -> String {
     file_io::write_file(path_decr, decr_message);
 
     println!("Your message decrypted!");
+
+    "".to_string()
+}
+
+
+pub fn integrity() -> String {
+
+    let mut path_raw = "local_data/raw/".to_string();
+    let mut data = "<**>\n".to_string();
+
+    let path_integrity = "local_data/integrity/hash_values.txt".to_string();
+
+
+    let filename = interface::read_filename();
+
+    path_raw.push_str(&filename);
+
+    let file_context = file_io::read_file(path_raw);
+    let whirlpool = integrity::whirlpool(file_context.clone());
+    let sha3 = integrity::sha3_512(file_context.clone());
+
+    data.push_str("File:: ");
+    data.push_str(&filename);
+    data.push_str("\nsha3_512:: ");
+    data.push_str(&sha3);
+    data.push_str("\nwhirpool:: ");
+    data.push_str(&whirlpool);
+    data.push_str("\n");
+
+    file_io::write_file(path_integrity, data);
+
+    println!("Hash values computed!\n");
 
     "".to_string()
 }

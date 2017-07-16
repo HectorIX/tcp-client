@@ -15,7 +15,7 @@ pub fn welcome_menu() {
 
 pub fn help_menu() -> String {
 
-    println!("\n     ====================   HELP MENU   ===================\n
+    println!("\n     ====================   HELP MENU   ====================\n
     \t<+> To use our clinet side services type: local
     \t<+> To use our server side services type: net\n");
 

@@ -166,7 +166,7 @@ fn read_stdin(mut tx: mpsc::Sender<Vec<u8>>) {
 
 
     loop {
-
+        
         let mut buf = vec![0; 1024];
 
         let n = match stdin.read(&mut buf) {
