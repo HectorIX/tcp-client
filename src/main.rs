@@ -24,7 +24,7 @@ mod local_services;
 mod client_sign_up;
 mod client_sign_in;
 mod client_upload;
-mod client_download; 
+mod client_download;
 mod caesar_cipher;
 mod aes_256;
 mod generate_password;
@@ -179,7 +179,17 @@ fn read_stdin(mut tx: mpsc::Sender<Vec<u8>>) {
 
         let full_request = translate(buf);
 
-        tx = tx.send(full_request.clone()).wait().unwrap();
+
+
+        if full_request == "exit".to_string().into_bytes() {
+
+            break;
+        }
+        else {
+
+            tx = tx.send(full_request.clone()).wait().unwrap();
+        }
+
     }
 }
 

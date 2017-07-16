@@ -97,7 +97,7 @@ pub fn request_constructor(req:String) -> String {
         },
         "exit" => {
 
-            "informatic_state::exit**".to_string()
+            "exit".to_string()
         },
         _ => {
 
