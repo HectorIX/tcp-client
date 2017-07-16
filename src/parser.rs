@@ -6,6 +6,8 @@ use client_sign_in;
 use client_upload;
 use client_download;
 
+
+use std::process;
 use bytes::{BytesMut};
 
 
@@ -129,7 +131,7 @@ pub fn response_decomposer(server_response:String) -> BytesMut {
                 let mut key  = session_key;
 
                 name.pop(); // no '\n'
-
+                //key.pop();  // Test SESSION_Expired
 
                 user::set_username(name);
                 user::set_session_key(key);
@@ -185,7 +187,9 @@ pub fn response_decomposer(server_response:String) -> BytesMut {
             }
             else if status == "SESSION_Expired".to_string() {
 
-                BytesMut::from("Session Expired...\n")
+                println!("Session Expired...\n");
+                process::exit(0x0f00);
+                BytesMut::from("\n")
             }
             else {
 
@@ -212,6 +216,12 @@ pub fn response_decomposer(server_response:String) -> BytesMut {
             else if status == "Failed".to_string() {
 
                 BytesMut::from("You are not Loged-In!\n")
+            }
+            else if status == "SESSION_Expired".to_string() {
+
+                println!("Session Expired...\n");
+                process::exit(0x0f00);
+                BytesMut::from("\n")
             }
             else {
 
@@ -261,4 +271,13 @@ pub fn extract_file_context(data:String) -> (String, String)  {
     let (filename, file_context) = (data_vector[0].to_owned(), data_vector[1].to_owned());
 
     (filename, file_context)
+}
+
+
+pub fn split_session_key(data:String) -> (String, String)  {
+
+    let data_vector: Vec<&str> = data.split("#!?#").collect();
+    let (session_key, file_data) = (data_vector[0].to_owned(), data_vector[1].to_owned());
+
+    (session_key, file_data)
 }

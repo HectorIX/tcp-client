@@ -13,6 +13,8 @@ pub fn download() -> String {
 
     full_request.push_str(&username);
     full_request.push_str("--");
+    full_request.push_str(&user::get_session_key());
+    full_request.push_str("#!?#");
     full_request.push_str(&filename);
 
     full_request
@@ -29,13 +31,21 @@ pub fn store_file_locally( data: String ) -> bool {
 
     if data.len() > 0 {
 
-        let (filename, file_context) = parser::extract_file_context(data);
+        let (session_key, file_data) = parser::split_session_key(data);
+        let (filename, file_context) = parser::extract_file_context(file_data);
 
-        path_to_file.push_str(&filename);
+        if session_key == user::get_session_key() {
 
-        file_io::write_file(path_to_file, file_context);
+            path_to_file.push_str(&filename);
 
-        return true;
+            file_io::write_file(path_to_file, file_context);
+
+            return true;
+        }
+        else {
+
+            return false;
+        }
     }
     else {
 
