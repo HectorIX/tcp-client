@@ -18,6 +18,8 @@ pub fn upload() -> String {
 
     full_request.push_str(&username);
     full_request.push_str("--");
+    full_request.push_str(&user::get_session_key());
+    full_request.push_str("#!?#");
     full_request.push_str(&filename);
     full_request.push_str("<$$>");
     full_request.push_str(&file_context);

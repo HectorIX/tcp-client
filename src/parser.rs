@@ -129,7 +129,7 @@ pub fn response_decomposer(server_response:String) -> BytesMut {
                 let mut key  = session_key;
 
                 name.pop(); // no '\n'
-                key.pop();
+
 
                 user::set_username(name);
                 user::set_session_key(key);
@@ -182,6 +182,10 @@ pub fn response_decomposer(server_response:String) -> BytesMut {
             else if status == "Failed".to_string() {
 
                 BytesMut::from("Service declined! You are not authorized user... Please login!\n")
+            }
+            else if status == "SESSION_Expired".to_string() {
+
+                BytesMut::from("Session Expired...\n")
             }
             else {
 

@@ -42,6 +42,4 @@ pub fn store_file_locally( data: String ) -> bool {
         return false;
     }
 
-
-    return false;
 }
