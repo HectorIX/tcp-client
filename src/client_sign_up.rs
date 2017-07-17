@@ -1,6 +1,6 @@
 extern crate rpassword;
 
-
+use std::fs;
 use integrity;
 
 
@@ -24,6 +24,84 @@ pub fn sign_up() -> String {
     full_request.push_str(&hashed_password);
 
 
+
+    create_local_folders();
+
+
     full_request.to_string()
+
+}
+
+
+
+fn create_local_folders() {
+
+
+    let download_dir = "download/".to_string();
+    let upload_dir = "to_upload/".to_string();
+    let local_data_dir = "local_data/".to_string();
+    let raw_dir = "local_data/raw/".to_string();
+    let decrypted_dir = "local_data/decrypted/".to_string();
+    let encrypted_dir = "local_data/encrypted".to_string();
+    let integrity_dir = "local_data/integrity".to_string();
+    let key_manager_dir = "local_data/key_manager".to_string();
+
+
+
+    match fs::create_dir(download_dir) {
+
+        Err(e) => println!("Failed to create folder: {:?}", e.kind()),
+        Ok(_)  => {},
+    }
+
+
+    match fs::create_dir(upload_dir) {
+
+        Err(e) => println!("Failed to create folder: {:?}", e.kind()),
+        Ok(_)  => {},
+    }
+
+
+
+    match fs::create_dir(local_data_dir) {
+
+        Err(e) => println!("Failed to create folder: {:?}", e.kind()),
+        Ok(_)  => {},
+    }
+
+
+    match fs::create_dir(raw_dir) {
+
+        Err(e) => println!("Failed to create folder: {:?}", e.kind()),
+        Ok(_)  => {},
+    }
+
+
+    match fs::create_dir(decrypted_dir) {
+
+        Err(e) => println!("Failed to create folder: {:?}", e.kind()),
+        Ok(_)  => {},
+    }
+
+
+    match fs::create_dir(encrypted_dir) {
+
+        Err(e) => println!("Failed to create folder: {:?}", e.kind()),
+        Ok(_)  => {},
+    }
+
+
+    match fs::create_dir(key_manager_dir) {
+
+        Err(e) => println!("Failed to create folder: {:?}", e.kind()),
+        Ok(_)  => {},
+    }
+
+
+    match fs::create_dir(integrity_dir) {
+
+        Err(e) => println!("Failed to create folder: {:?}", e.kind()),
+        Ok(_)  => {},
+    }
 
 }
