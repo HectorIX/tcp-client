@@ -128,7 +128,7 @@ pub fn response_decomposer(server_response:String) -> BytesMut {
                 let (session_key, username) = extract_session_key(data);
 
                 let mut name = username;
-                let mut key  = session_key;
+                let key  = session_key;
 
                 name.pop(); // no '\n'
                 //key.pop();  // Test SESSION_Expired

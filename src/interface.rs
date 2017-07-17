@@ -1,7 +1,7 @@
 extern crate rpassword;
 
 
-use std::io::{self, BufRead};
+use std::io::{self};
 
 
 // User inserts an integer value

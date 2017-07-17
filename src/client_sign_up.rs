@@ -1,7 +1,6 @@
 extern crate rpassword;
 
 
-use std::io::{self};
 
 
 pub fn sign_up() -> String {

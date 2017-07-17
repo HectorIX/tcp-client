@@ -20,7 +20,7 @@ pub struct User {
 lazy_static! {
 
     static ref user: Mutex<User> = {
-        let mut m = Mutex::new(User::default());
+        let m = Mutex::new(User::default());
         m
     };
 }
