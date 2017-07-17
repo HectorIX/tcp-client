@@ -44,22 +44,25 @@ pub fn server_menu() -> String {
 
 
     let horizontal_line = "\n=========================    SERVER MENU    =======================\n\n";
-    let exit      = "\t <:> To exit type: exit\n";
+    let sign_out  = "\t <:> To sign-out type: Disconnect\n";
     let sign_in   = "\t <:> To sign-in type: Sign-in\n";
     let sign_up   = "\t <:> To sign-up type: Sign-up\n";
+    let connect   = "\t <:> To connect to the server type: Connect\n";
     let upload    = "\t <:> To upload an encryped file type: Upload\n";
     let download  = "\t <:> To download a file of yours type: Download\n";
+    let tip       = "\n\t [~Tip~] :: Type Connect first!\n";
 
 
 
-
-    println!("{} {} {} {} {} {}",
+    println!("{} {} {} {} {} {} {} {}",
                                     horizontal_line,
-                                    exit,
                                     sign_up,
                                     sign_in,
+                                    sign_out,
+                                    connect,
                                     upload,
-                                    download
+                                    download,
+                                    tip
     );
 
     "".to_string()

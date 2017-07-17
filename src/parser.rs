@@ -97,7 +97,11 @@ pub fn request_constructor(req:String) -> String {
 
             local_services::caesar_decrypt()
         },
-        "exit" => {
+        "Disconnect" => {
+
+            user::set_username( "".to_string() );
+            user::set_session_key( "".to_string() );
+            user::set_user_status(false);
 
             "exit".to_string()
         },
