@@ -1,6 +1,8 @@
 extern crate rpassword;
 
 
+use integrity;
+
 
 
 pub fn sign_up() -> String {
@@ -17,8 +19,9 @@ pub fn sign_up() -> String {
     full_request.push_str("--");
 
     let password = rpassword::prompt_password_stdout("password: ").unwrap();
-    println!("\nPlease press enter...\n");
-    full_request.push_str(&password);
+    let hashed_password = integrity::sha3_512(password);
+
+    full_request.push_str(&hashed_password);
 
 
     full_request.to_string()
