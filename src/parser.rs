@@ -174,6 +174,10 @@ pub fn response_decomposer(server_response:String) -> BytesMut {
 
                 BytesMut::from("\n\t ** You are not authorised to Sign-up while Loged-In!\n")
             }
+            else if status == "Failure".to_string() {
+
+                BytesMut::from("\n\t ** Failed to communicate with the database. Please try again...\n")
+            }
             else {
 
                 BytesMut::from("No such state\n" )
