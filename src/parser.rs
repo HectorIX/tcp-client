@@ -193,6 +193,10 @@ pub fn response_decomposer(server_response:String) -> BytesMut {
 
                 BytesMut::from("\n\t*** Service declined! You are not authorized user... Please login!\n")
             }
+            else if status == "Failure".to_string() {
+
+                BytesMut::from("\n\t*** Failed to access the database. Please try again...")
+            }
             else if status == "SESSION_Expired".to_string() {
 
                 println!("\n\t*** Session Expired...\n");
