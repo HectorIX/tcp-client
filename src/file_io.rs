@@ -7,7 +7,7 @@ use std::fs::{OpenOptions};
 // If the file does not extist, create it.
 // The first argument (filename:String) is the name of the file
 // and the second argument (message:String) is the message will be stored.
-pub fn write_file( filename:String, context:String ) {
+pub fn write_file( filename:String, context:String ) -> String {
 
 
     // Create the File if not already exists.
@@ -17,18 +17,19 @@ pub fn write_file( filename:String, context:String ) {
                                     .create(true)
                                     .open(&filename) {
 
-        Err(e)   => { return println!("System failed to write to File {}: {}", filename, e.description()); },
+        Err(e)   => { return format!("**Failed to write to File {}: {}", filename, e.description()); },
         Ok(file) => file,
     };
 
     // Write the context into the file.
     match file.write_all(context.as_bytes()) {
 
-        Err(e) => { return println!("\n\t*** Operation failed. Couldn't write to {}: {}", filename, e.description());},
+        Err(e) => { return format!("\n\t**Failed. Couldn't write to {}: {}", filename, e.description());},
         Ok(_) => println!("\n\t*** Message successfully stored into {}.", filename),
     }
 
 
+    "OK".to_string()
 }
 
 
@@ -92,7 +93,7 @@ pub fn read_u8( filename: String ) -> Vec<u8> {
 
 
 
-pub fn append( filename:String, context:String ) {
+pub fn append( filename:String, context:String ) -> String {
 
 
     // Create the File if not already exists.
@@ -103,15 +104,17 @@ pub fn append( filename:String, context:String ) {
                                     .append(true)
                                     .open(&filename) {
 
-        Err(e) => { return println!("**Failed {}", e.description()); },
+        Err(e) => { return format!("**Failed {}", e.description()); },
         Ok(file) => file,
     };
 
     // Write the context into the file.
     match file.write_all(context.as_bytes()) {
 
-        Err(e) => { return println!("**Failed. {}",  e.description()); },
+        Err(e) => { return format!("**Failed. {}",  e.description()); },
         Ok(_) => println!("\n\t*** Message successfully stored into {}.", filename),
     }
+
+    "OK".to_string()
 
 }
