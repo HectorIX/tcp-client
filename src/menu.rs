@@ -31,8 +31,7 @@ pub fn client_menu() -> String {
     println!("    <+> To encrypt a file using AES-256 type: AES-Encrypt");
     println!("    <+> To decrypt a file [encrypted by Caesar Cipher] type: Caesar-Decrypt");
     println!("    <+> To decrypt a file [encrypted by AES-256] type: AES-Decrypt");
-    println!("    <+> To compute the hash value of a file type: integrity");
-    println!("    <+> Type exit to terminate the program.\n");
+    println!("    <+> To compute the hash value of a file type: Integrity");
 
     "".to_string()
 }

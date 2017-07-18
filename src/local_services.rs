@@ -181,20 +181,32 @@ pub fn integrity() -> String {
     path_raw.push_str(&filename);
 
     let file_context = file_io::read_file(path_raw);
-    let whirlpool = integrity::whirlpool(file_context.clone());
-    let sha3 = integrity::sha3_512(file_context.clone());
 
-    data.push_str("File:: ");
-    data.push_str(&filename);
-    data.push_str("\nsha3_512:: ");
-    data.push_str(&sha3);
-    data.push_str("\nwhirpool:: ");
-    data.push_str(&whirlpool);
-    data.push_str("\n");
 
-    file_io::append(path_integrity, data);
+    if !file_context.starts_with("**Failed") {
 
-    println!("Hash values computed!\n");
+        let whirlpool = integrity::whirlpool(file_context.clone());
+        let sha3 = integrity::sha3_512(file_context.clone());
+
+        data.push_str("File:: ");
+        data.push_str(&filename);
+        data.push_str("\nsha3_512:: ");
+        data.push_str(&sha3);
+        data.push_str("\nwhirpool:: ");
+        data.push_str(&whirlpool);
+        data.push_str("\n");
+
+        file_io::append(path_integrity, data);
+
+        println!("\n\t*** Hash values computed!\n");
+
+    }
+    else {
+
+        println!("\n\t*** Operation failed. There is no file: {}\n", filename );
+    }
+
+
 
     "".to_string()
 }

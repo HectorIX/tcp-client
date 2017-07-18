@@ -17,22 +17,17 @@ pub fn write_file( filename:String, context:String ) {
                                     .create(true)
                                     .open(&filename) {
 
-        Err(failure) => panic!("System failed to create File {} because of: {}",
-                        filename,
-                        failure.description()
-                    ),
+        Err(e)   => { return println!("System failed to write to File {}: {}", filename, e.description()); },
         Ok(file) => file,
     };
 
     // Write the context into the file.
     match file.write_all(context.as_bytes()) {
 
-        Err(failure) => {
-                panic!("Couldn't write to {}: {}", filename
-                                                 , failure.description())
-                },
-        Ok(_) => println!("Message successfully stored into {}.", filename),
+        Err(e) => { return println!("\n\t*** Operation failed. Couldn't write to {}: {}", filename, e.description());},
+        Ok(_) => println!("\n\t*** Message successfully stored into {}.", filename),
     }
+
 
 }
 
@@ -48,10 +43,7 @@ pub fn read_file( filename:String ) -> String {
                                      .read(true)
                                      .open(&filename) {
 
-        Err(failure) => panic!("System failed to create File {} because of: {}",
-                                filename,
-                                failure.description()
-                              ),
+        Err(e) => { return format!("**Failed {}", e.description()); },
         Ok(file) => file,
     };
 
@@ -62,17 +54,41 @@ pub fn read_file( filename:String ) -> String {
     // Read the file and store it in context.
     match file.read_to_string(&mut context) {
 
-        Err(failure) => {
-                panic!("Couldn't read from {}: {}", filename
-                                                  , failure.description())
-                },
-        Ok(_) => println!("Message successfully read from {}.", filename),
+        Err(e) => { return format!("**Failed {}", e.description()) },
+        Ok(_) => println!("\n\t*** Message successfully read from {}.", filename),
     };
 
     context
 
 }
 
+/*
+pub fn read_u8( filename: String ) -> Vec<u8> {
+
+    // Open the File.
+    let mut file = match OpenOptions::new()
+                                     .read(true)
+                                     .open(&filename) {
+
+        Err(e) => { format!("**Failed {}", e.description() ) },
+        Ok(file) => file,
+    };
+
+
+
+    let mut bytes = Vec::new();
+
+    // Read the file and store it in context.
+    match file.read_to_end(&mut bytes) {
+
+        Err(e) => {  format!("**Failed {}", e.description()) },
+        Ok(_) => println!("\n\t*** Message successfully read from {}.", filename),
+    };
+
+    bytes
+
+}
+*/
 
 
 
@@ -87,21 +103,15 @@ pub fn append( filename:String, context:String ) {
                                     .append(true)
                                     .open(&filename) {
 
-        Err(failure) => panic!("System failed to create File {} because of: {}",
-                        filename,
-                        failure.description()
-                    ),
+        Err(e) => { return println!("**Failed {}", e.description()); },
         Ok(file) => file,
     };
 
     // Write the context into the file.
     match file.write_all(context.as_bytes()) {
 
-        Err(failure) => {
-                panic!("Couldn't write to {}: {}", filename
-                                                 , failure.description())
-                },
-        Ok(_) => println!("Message successfully stored into {}.", filename),
+        Err(e) => { return println!("**Failed. {}",  e.description()); },
+        Ok(_) => println!("\n\t*** Message successfully stored into {}.", filename),
     }
 
 }

@@ -19,7 +19,7 @@ pub struct User {
 
 lazy_static! {
 
-    static ref user: Mutex<User> = {
+    static ref USER: Mutex<User> = {
         let m = Mutex::new(User::default());
         m
     };
@@ -29,37 +29,37 @@ lazy_static! {
 
 pub fn set_username( username:String ) {
 
-    user.lock().unwrap().username = username;
+    USER.lock().unwrap().username = username;
 }
 
 
 pub fn set_session_key( session_key: String ) {
 
-    user.lock().unwrap().session_key = session_key;
+    USER.lock().unwrap().session_key = session_key;
 }
 
 
 pub fn set_user_status ( active: bool ) {
 
-    user.lock().unwrap().active = active;
+    USER.lock().unwrap().active = active;
 }
 
 
 
 pub fn get_username() -> String {
 
-    let username = user.lock().unwrap().username.clone();
+    let username = USER.lock().unwrap().username.clone();
     username
 }
 
 pub fn get_session_key() -> String {
 
-    let session_key = user.lock().unwrap().session_key.clone();
+    let session_key = USER.lock().unwrap().session_key.clone();
     session_key
 }
 
 pub fn get_user_status() -> bool {
 
-    let status = user.lock().unwrap().active.clone();
+    let status = USER.lock().unwrap().active.clone();
     status
 }

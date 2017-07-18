@@ -100,10 +100,9 @@ pub fn read_stdin(mut tx: mpsc::Sender<Vec<u8>>) {
 
 fn translate(buffer:Vec<u8>) -> Vec<u8> {
 
-
     let readble_form = match str::from_utf8(&buffer) {
         Ok(v) => v,
-        Err(e) => panic!("Invalid UTF-8 sequence: {}", e),
+        Err(e) => panic!("Invalid UTF-8 sequence: {}", e)
     };
 
     let client_request = parser::request_constructor(readble_form.to_string());

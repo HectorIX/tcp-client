@@ -12,7 +12,7 @@ pub fn read_integer() -> u32 {
     let mut key = 0;
     let mut number_as_text = String::new();
 
-    println!("Enter the Encryption key: ");
+    println!("\nEnter the Encryption key: ");
 
         io::stdin()
             .read_line(&mut number_as_text)
@@ -21,7 +21,7 @@ pub fn read_integer() -> u32 {
         let trimmed = number_as_text.trim();
         match trimmed.parse::<u32>() {
             Ok(i) => key = i,
-            Err(..) => println!("this was not an integer: {}", trimmed)
+            Err(..) => println!("\nThis was not an integer: {}", trimmed)
         };
 
     key
@@ -34,7 +34,7 @@ pub fn read_integer() -> u32 {
 // and return this message.
 pub fn read_filename() -> String {
 
-    let filename = rpassword::prompt_response_stdout("Enter filename: ").unwrap();
+    let filename = rpassword::prompt_response_stdout("\nEnter filename: ").unwrap();
 
     filename
 
