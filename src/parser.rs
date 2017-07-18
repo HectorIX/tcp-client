@@ -23,12 +23,15 @@ pub fn request_constructor(req:String) -> String {
     match no_new_line.as_ref() {
 
         "help" => {
+
             menu::help_menu()
         },
         "local" => {
+
             menu::client_menu()
         },
         "net" => {
+
             menu::server_menu()
         },
         "Sign-up" => {
@@ -149,6 +152,10 @@ pub fn response_decomposer(server_response:String) -> BytesMut {
             else if status == "NOT_Mactching".to_string() {
 
                 BytesMut::from("\n\n\t*** Either your username or password are incorrect.\n\t    Please try again...\n")
+            }
+            else if status == "UNCONFIRMED".to_string() {
+
+                BytesMut::from("\n\t*** Your password is not match! Please try again to Sign-up...\n")
             }
             else if status == "ALREADY_Sign_in".to_string() {
 

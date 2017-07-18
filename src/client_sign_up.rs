@@ -19,16 +19,23 @@ pub fn sign_up() -> String {
     full_request.push_str("--");
 
     let password = rpassword::prompt_password_stdout("password: ").unwrap();
-    let hashed_password = integrity::sha3_512(password);
-
-    full_request.push_str(&hashed_password);
+    let confirm  = rpassword::prompt_password_stdout("Confirm password: ").unwrap();
 
 
+    if password == confirm {
 
-    create_local_folders();
+        let hashed_password = integrity::sha3_512(password);
+        full_request.push_str(&hashed_password);
 
+        create_local_folders();
 
-    full_request.to_string()
+        full_request
+    }
+    else {
+
+        full_request = "sign_up_state::Sign-up**UNCONFIRMED--UNCONFIRMED".to_string();
+        full_request
+    }
 
 }
 

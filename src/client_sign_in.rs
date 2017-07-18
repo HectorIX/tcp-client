@@ -16,6 +16,7 @@ pub fn sign_in() -> String {
     full_request.push_str("--");
 
     let password = rpassword::prompt_password_stdout("password: ").unwrap();
+
     let hashed_password = integrity::sha3_512(password);
 
     full_request.push_str(&hashed_password);
