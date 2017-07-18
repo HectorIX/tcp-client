@@ -152,7 +152,7 @@ pub fn response_decomposer(server_response:String) -> BytesMut {
             }
             else if status == "ALREADY_Sign_in".to_string() {
 
-                BytesMut::from("\n\t You are already Loged-In!\n")
+                BytesMut::from("\n\t*** You are already Loged-In!\n")
             }
             else {
 
@@ -164,19 +164,19 @@ pub fn response_decomposer(server_response:String) -> BytesMut {
 
             if status == "OK".to_string() {
 
-                BytesMut::from("Congradulations! You signed up successfully!\n")
+                BytesMut::from("\n\t*** Congradulations! You signed up successfully!\n")
             }
             else if status == "Dublicate".to_string() {
 
-                BytesMut::from("\n\t ** Username already exists!\n")
+                BytesMut::from("\n\t*** Username already exists!\n")
             }
             else if status == "Unauthorised".to_string() {
 
-                BytesMut::from("\n\t ** You are not authorised to Sign-up while Loged-In!\n")
+                BytesMut::from("\n\t*** You are not authorised to Sign-up while Loged-In!\n")
             }
             else if status == "Failure".to_string() {
 
-                BytesMut::from("\n\t ** Failed to communicate with the database. Please try again...\n")
+                BytesMut::from("\n\t*** Failed to access the database. Please try again...\n")
             }
             else {
 
@@ -187,15 +187,15 @@ pub fn response_decomposer(server_response:String) -> BytesMut {
 
             if status == "OK".to_string() {
 
-                BytesMut::from("Upload completed!\n")
+                BytesMut::from("\n\t*** Upload completed!\n")
             }
             else if status == "Failed".to_string() {
 
-                BytesMut::from("Service declined! You are not authorized user... Please login!\n")
+                BytesMut::from("\n\t*** Service declined! You are not authorized user... Please login!\n")
             }
             else if status == "SESSION_Expired".to_string() {
 
-                println!("Session Expired...\n");
+                println!("\n\t*** Session Expired...\n");
                 process::exit(0x0f00);
                 BytesMut::from("\n")
             }
@@ -213,17 +213,21 @@ pub fn response_decomposer(server_response:String) -> BytesMut {
 
                 if success {
 
-                    BytesMut::from("Download completed!\n")
+                    BytesMut::from("\n\t*** Download completed!\n")
                 }
                 else {
 
-                    BytesMut::from("No such file in your privated data directory!\n")
+                    BytesMut::from("\n\t*** No such file in your privated data directory!\n")
                 }
 
             }
             else if status == "Failed".to_string() {
 
-                BytesMut::from("You are not Loged-In!\n")
+                BytesMut::from("\n\t*** You are not Loged-In!\n")
+            }
+            else if status == "Failure".to_string() {
+
+                BytesMut::from("\n\t*** Failed to access the database. Please try again...")
             }
             else if status == "SESSION_Expired".to_string() {
 
