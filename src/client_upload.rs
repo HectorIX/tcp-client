@@ -15,8 +15,8 @@ pub fn upload() -> String {
     path_to_file.push_str(&filename);
 
     let file_context = file_io::read_file(path_to_file.to_string());
-    //println!("data = {:?}", file_context );
-    //let data = unsafe {str::from_utf8_unchecked(&file_context) };
+    let x = file_io::read_u8(path_to_file.clone().to_string());
+
     let username = user::get_username();
 
     full_request.push_str(&username);

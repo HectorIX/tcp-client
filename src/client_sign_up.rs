@@ -27,6 +27,11 @@ pub fn sign_up() -> String {
         let hashed_password = integrity::sha3_512(password);
         full_request.push_str(&hashed_password);
 
+        let email = rpassword::prompt_response_stdout("email: ").unwrap();
+
+        full_request.push_str("^^^^");
+        full_request.push_str(&email);
+
         create_local_folders();
 
         full_request

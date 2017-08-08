@@ -63,7 +63,7 @@ pub fn read_file( filename:String ) -> String {
 
 }
 
-/*
+
 pub fn read_u8( filename: String ) -> Vec<u8> {
 
     // Open the File.
@@ -71,7 +71,7 @@ pub fn read_u8( filename: String ) -> Vec<u8> {
                                      .read(true)
                                      .open(&filename) {
 
-        Err(e) => { format!("**Failed {}", e.description() ) },
+        Err(e) => { return "**Failed".to_string().into_bytes(); },
         Ok(file) => file,
     };
 
@@ -82,14 +82,14 @@ pub fn read_u8( filename: String ) -> Vec<u8> {
     // Read the file and store it in context.
     match file.read_to_end(&mut bytes) {
 
-        Err(e) => {  format!("**Failed {}", e.description()) },
+        Err(e) => {  return "**Failed {}".to_string().into_bytes(); },
         Ok(_) => println!("\n\t*** Message successfully read from {}.", filename),
     };
 
     bytes
 
 }
-*/
+
 
 
 
